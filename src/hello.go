@@ -15,6 +15,8 @@ func main() {
 	readComands()
 	firstIfElse()
 	firstSwitch()
+	_, age := returnNameAndAge(123) // _ for ignoring undesirable return variables
+	println(age)
 	startMonitoring()
 }
 
@@ -99,11 +101,21 @@ func firstSwitch(){
 
 }
 
+func returnNameAndAge(id int) (string, int) {
+	fmt.Println("Calling database with id", id, "...")
+	fmt.Println("Response name and age for the given ID!")
+	return "name", 21
+}
+
 func startMonitoring(){
 		fmt.Println("Starting monitoring...")
 		site := "https://www.alura.com.br"
 		response, err := http.Get(site)
 		fmt.Println("Response: ", response)
 		fmt.Println("Error: ", err)
+		
+		site2 := "https://google.com"
+		response2,_ := http.Get(site2)
+		fmt.Println(response2)
 
 }

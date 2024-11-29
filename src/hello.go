@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	"net/http"
 )
 
 func main() {
@@ -14,6 +15,7 @@ func main() {
 	readComands()
 	firstIfElse()
 	firstSwitch()
+	startMonitoring()
 }
 
 func showVariables() {
@@ -93,5 +95,15 @@ func firstSwitch(){
 	}
 
 	//IN go we dont need to use break, it automatically breaks when matches any condition
+
+
+}
+
+func startMonitoring(){
+		fmt.Println("Starting monitoring...")
+		site := "https://www.alura.com.br"
+		response, err := http.Get(site)
+		fmt.Println("Response: ", response)
+		fmt.Println("Error: ", err)
 
 }

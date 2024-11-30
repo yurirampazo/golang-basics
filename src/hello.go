@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 	"reflect"
-	"net/http"
 )
 
 func main() {
@@ -54,16 +54,19 @@ func showVariablesInfo() {
 
 func readComands() {
 	/**Interacting with user*/
-	fmt.Println("1- Start monitoring")
-	fmt.Println("2- Show logs")
-	fmt.Println("0- Quit")
+	for {
+		fmt.Println("1- Start monitoring")
 
-	var instruction int
-	// fmt.Scanf("%d", &instruction)
-	fmt.Scan(&instruction) /*can just use the scan method instead*/
-	//& stands for the pointer of variable in machine memory
-	fmt.Println("The address in memory is", &instruction)
-	fmt.Println("The choosen instruction was", instruction)
+		fmt.Println("2- Show logs")
+		fmt.Println("0- Quit")
+
+		var instruction int
+		// fmt.Scanf("%d", &instruction)
+		fmt.Scan(&instruction) /*can just use the scan method instead*/
+		//& stands for the pointer of variable in machine memory
+		fmt.Println("The address in memory is", &instruction)
+		fmt.Println("The choosen instruction was", instruction)
+	}
 }
 
 func firstIfElse() {
@@ -79,7 +82,7 @@ func firstIfElse() {
 
 }
 
-func firstSwitch(){
+func firstSwitch() {
 	num := 1
 
 	switch num {
@@ -98,7 +101,6 @@ func firstSwitch(){
 
 	//IN go we dont need to use break, it automatically breaks when matches any condition
 
-
 }
 
 func returnNameAndAge(id int) (string, int) {
@@ -107,15 +109,23 @@ func returnNameAndAge(id int) (string, int) {
 	return "name", 21
 }
 
-func startMonitoring(){
-		fmt.Println("Starting monitoring...")
-		site := "https://www.alura.com.br"
-		response, err := http.Get(site)
-		fmt.Println("Response: ", response)
-		fmt.Println("Error: ", err)
-		
-		site2 := "https://google.com"
-		response2,_ := http.Get(site2)
-		fmt.Println(response2)
+func startMonitoring() {
 
+	fmt.Println("Starting monitoring...")
+	site := "https://www.alura.com.br"
+	response, err := http.Get(site)
+	fmt.Println("Response: ", response)
+	fmt.Println("Error: ", err)
+
+	site2 := "https://google.com"
+	response2, _ := http.Get(site2)
+
+	if response2.StatusCode == 200 {
+		fmt.Println("Site: ", site, "foi carregado com sucesso!")
+	} else {
+		fmt.Println("Site: ", site2,
+			"está com problemas.Status code",
+			response2.StatusCode)
+	}
+	fmt.Println(response2)
 }

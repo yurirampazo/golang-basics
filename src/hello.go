@@ -8,16 +8,17 @@ import (
 )
 
 func main() {
-	fmt.Println("Hello World")
-	fmt.Println("go build hello.go + ./hello = go run hello.go")
-	showVariables()
-	showVariablesInfo()
-	readComands()
-	firstIfElse()
-	firstSwitch()
-	_, age := returnNameAndAge(123) // _ for ignoring undesirable return variables
-	println(age)
-	startMonitoring()
+	// fmt.Println("Hello World")
+	// fmt.Println("go build hello.go + ./hello = go run hello.go")
+	// showVariables()
+	// showVariablesInfo()
+	// readComands()
+	// firstIfElse()
+	// firstSwitch()
+	// _, age := returnNameAndAge(123) // _ for ignoring undesirable return variables
+	// println(age)
+	// startMonitoring()
+	showNames()
 }
 
 func showVariables() {
@@ -66,6 +67,9 @@ func readComands() {
 		//& stands for the pointer of variable in machine memory
 		fmt.Println("The address in memory is", &instruction)
 		fmt.Println("The choosen instruction was", instruction)
+		if instruction == 0 {
+			break
+		}
 	}
 }
 
@@ -110,15 +114,18 @@ func returnNameAndAge(id int) (string, int) {
 }
 
 func startMonitoring() {
-
+	var sites[2] string
 	fmt.Println("Starting monitoring...")
 	site := "https://www.alura.com.br"
 	response, err := http.Get(site)
 	fmt.Println("Response: ", response)
 	fmt.Println("Error: ", err)
+	sites[0] = site
 
 	site2 := "https://google.com"
 	response2, _ := http.Get(site2)
+	sites[1] = site2
+	fmt.Println("MOnitoring sites:", sites)
 
 	if response2.StatusCode == 200 {
 		fmt.Println("Site: ", site, "foi carregado com sucesso!")
@@ -128,4 +135,16 @@ func startMonitoring() {
 			response2.StatusCode)
 	}
 	fmt.Println(response2)
+	fmt.Println(reflect.TypeOf(sites))
+
+}
+
+func showNames() {
+	names := []string{"katia" , "jana", "wilton", "jose", "maria", "dj", "wm"}
+	fmt.Println(names) 
+	fmt.Println(reflect.TypeOf(names))
+	fmt.Println(len(names))
+	names = append(names, "gaga")
+	fmt.Println(names)
+	fmt.Println(cap(names))	
 }

@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"reflect"
+	"time"
 )
 
 func main() {
@@ -121,31 +122,18 @@ func startMonitoring() {
 	response, err := http.Get(sites[0])
 	fmt.Println("Response: ", response)
 	fmt.Println("Error: ", err)
-
-	response2, _ := http.Get(sites[1])
-	fmt.Println("MOnitoring sites:", sites)
-
-	if response2.StatusCode == 200 {
-		fmt.Println("Site: ", sites[0], "foi carregado com sucesso!")
-	} else {
-		fmt.Println("Site: ", sites[1],
-			"está com problemas.Status code",
-			response2.StatusCode)
-	}
-	fmt.Println(response2)
-	fmt.Println(reflect.TypeOf(sites))
-
-
 // for i:= 0; i < len(sites); i++ {
 // 	fmt.Println(sites[i])
 // }
 for i, site := range sites {
 	fmt.Println("Position", i, "of sites with site: ", site)
+
 } 
 
 
 for _, site := range sites {
-	fmt.Println("Test of sites with site: ", site)
+	testSite(site)
+	time.Sleep(5 * time.Second)
 } 
 }
 
@@ -157,4 +145,18 @@ func showNames() {
 	names = append(names, "gaga")
 	fmt.Println(names)
 	fmt.Println(cap(names))	
+}
+
+
+func testSite(site string) {
+	response, err := http.Get(site)
+	if response.StatusCode == 200 {
+		fmt.Println("Site: ", site, "foi carregado com sucesso!")
+	} else {
+		fmt.Println("Site: ", site,
+			"está com problemas.Status code",
+			err)
+	}
+	fmt.Println(response)
+	fmt.Println(reflect.TypeOf(site))
 }

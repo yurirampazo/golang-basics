@@ -17,7 +17,7 @@ func main() {
 	// firstSwitch()
 	// _, age := returnNameAndAge(123) // _ for ignoring undesirable return variables
 	// println(age)
-	// startMonitoring()
+	startMonitoring()
 	showNames()
 }
 
@@ -114,29 +114,39 @@ func returnNameAndAge(id int) (string, int) {
 }
 
 func startMonitoring() {
-	var sites[2] string
+	sites := []string{
+		"https://www.alura.com.br",
+		"https://google.com"}
 	fmt.Println("Starting monitoring...")
-	site := "https://www.alura.com.br"
-	response, err := http.Get(site)
+	response, err := http.Get(sites[0])
 	fmt.Println("Response: ", response)
 	fmt.Println("Error: ", err)
-	sites[0] = site
 
-	site2 := "https://google.com"
-	response2, _ := http.Get(site2)
-	sites[1] = site2
+	response2, _ := http.Get(sites[1])
 	fmt.Println("MOnitoring sites:", sites)
 
 	if response2.StatusCode == 200 {
-		fmt.Println("Site: ", site, "foi carregado com sucesso!")
+		fmt.Println("Site: ", sites[0], "foi carregado com sucesso!")
 	} else {
-		fmt.Println("Site: ", site2,
+		fmt.Println("Site: ", sites[1],
 			"está com problemas.Status code",
 			response2.StatusCode)
 	}
 	fmt.Println(response2)
 	fmt.Println(reflect.TypeOf(sites))
 
+
+// for i:= 0; i < len(sites); i++ {
+// 	fmt.Println(sites[i])
+// }
+for i, site := range sites {
+	fmt.Println("Position", i, "of sites with site: ", site)
+} 
+
+
+for _, site := range sites {
+	fmt.Println("Test of sites with site: ", site)
+} 
 }
 
 func showNames() {

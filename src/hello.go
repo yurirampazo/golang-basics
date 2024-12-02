@@ -6,6 +6,8 @@ import (
 	"os"
 	"reflect"
 	"time"
+	// "io/ioutil"
+	"bufio"
 )
 
 func main() {
@@ -18,8 +20,9 @@ func main() {
 	// firstSwitch()
 	// _, age := returnNameAndAge(123) // _ for ignoring undesirable return variables
 	// println(age)
-	startMonitoring()
-	showNames()
+	// startMonitoring()
+	// showNames()
+	readSitesFromFile()
 }
 
 func showVariables() {
@@ -150,13 +153,33 @@ func showNames() {
 
 func testSite(site string) {
 	response, err := http.Get(site)
-	if response.StatusCode == 200 {
+	if  response.StatusCode == 200 {
 		fmt.Println("Site: ", site, "foi carregado com sucesso!")
-	} else {
+	} else if err != nil {
 		fmt.Println("Site: ", site,
 			"está com problemas.Status code",
 			err)
 	}
 	fmt.Println(response)
 	fmt.Println(reflect.TypeOf(site))
+}
+
+func readSitesFromFile() []string {
+	file, err := os.Open("sites.txt")
+
+	
+	reader := bufio.NewReader(file) // read lines
+	line, err := reader.ReadString('\n')
+	fmt.Println(line)
+	fmt.Println(err)
+	
+	// file, err := ioutil.ReadFile("sites.txt") //read all file
+	// fmt.Println(string(file))
+	var slice []string
+
+	if err != nil {
+		fmt.Print("Error found:", err)
+	}
+
+	return slice;
 }

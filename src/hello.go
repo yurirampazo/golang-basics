@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"reflect"
 	"time"
+
 	// "io/ioutil"
 	"bufio"
 )
@@ -125,35 +127,33 @@ func startMonitoring() {
 	response, err := http.Get(sites[0])
 	fmt.Println("Response: ", response)
 	fmt.Println("Error: ", err)
-// for i:= 0; i < len(sites); i++ {
-// 	fmt.Println(sites[i])
-// }
-for i, site := range sites {
-	fmt.Println("Position", i, "of sites with site: ", site)
+	// for i:= 0; i < len(sites); i++ {
+	// 	fmt.Println(sites[i])
+	// }
+	for i, site := range sites {
+		fmt.Println("Position", i, "of sites with site: ", site)
 
-} 
+	}
 
-
-for _, site := range sites {
-	testSite(site)
-	time.Sleep(5 * time.Second)
-} 
+	for _, site := range sites {
+		testSite(site)
+		time.Sleep(5 * time.Second)
+	}
 }
 
 func showNames() {
-	names := []string{"katia" , "jana", "wilton", "jose", "maria", "dj", "wm"}
-	fmt.Println(names) 
+	names := []string{"katia", "jana", "wilton", "jose", "maria", "dj", "wm"}
+	fmt.Println(names)
 	fmt.Println(reflect.TypeOf(names))
 	fmt.Println(len(names))
 	names = append(names, "gaga")
 	fmt.Println(names)
-	fmt.Println(cap(names))	
+	fmt.Println(cap(names))
 }
-
 
 func testSite(site string) {
 	response, err := http.Get(site)
-	if  response.StatusCode == 200 {
+	if response.StatusCode == 200 {
 		fmt.Println("Site: ", site, "foi carregado com sucesso!")
 	} else if err != nil {
 		fmt.Println("Site: ", site,
@@ -167,19 +167,24 @@ func testSite(site string) {
 func readSitesFromFile() []string {
 	file, err := os.Open("sites.txt")
 
-	
 	reader := bufio.NewReader(file) // read lines
-	line, err := reader.ReadString('\n')
-	fmt.Println(line)
-	fmt.Println(err)
-	
-	// file, err := ioutil.ReadFile("sites.txt") //read all file
-	// fmt.Println(string(file))
 	var slice []string
 
-	if err != nil {
-		fmt.Print("Error found:", err)
-	}
+	fmt.Print("Error found:", err)
+	for {
 
-	return slice;
+		line, err := reader.ReadString('\n')
+		fmt.Println(line)
+		fmt.Println(err)
+
+		// file, err := ioutil.ReadFile("sites.txt") //read all file
+
+		// fmt.Println(string(file))
+		if err == io.EOF {
+			fmt.Print("Error found:", err)
+			break
+		}
+
+	}
+	return slice
 }
